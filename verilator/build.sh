@@ -1,0 +1,1 @@
+verilator --cc --exe --build -j 8 -Wall fma_tb.cpp ../rtl/fma.sv
