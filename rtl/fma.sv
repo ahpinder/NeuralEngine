@@ -7,22 +7,22 @@ module fma #(
     input logic clk, rstn, mode;
 
     // input from previous layer
-    input signed logic [DATA_WIDTH-1:0] val_in [VECTOR_WIDTH-1:0];
+    input logic signed [DATA_WIDTH-1:0] val_in [VECTOR_WIDTH-1:0];
 
     // weight from current layer
-    input signed logic [WEIGHT_WIDTH-1:0] weight_in [VECTOR_WIDTH-1:0];
+    input logic signed [WEIGHT_WIDTH-1:0] weight_in [VECTOR_WIDTH-1:0];
 
     // bias from current layer
-    input signed logic [OUTPUT_WIDTH-1:0] bias_in [VECTOR_WIDTH-1:0];
+    input logic  signed [OUTPUT_WIDTH-1:0] bias_in [VECTOR_WIDTH-1:0];
 
     // output to next layer
-    output signed logic [OUTPUT_WIDTH-1:0] sum_out [VECTOR_WIDTH-1:0];
+    output logic signed [OUTPUT_WIDTH-1:0] sum_out [VECTOR_WIDTH-1:0];
 );
     // first stage of pipeline -- product
-    logic [OUTPUT_WIDTH-1:0] prod_reg [VECTOR_WIDTH-1:0];
+    logic signed [OUTPUT_WIDTH-1:0] prod_reg [VECTOR_WIDTH-1:0];
 
     // second stage of pipeline -- sum
-    logic [OUTPUT_WIDTH-1:0] partial_sum [VECTOR_WIDTH-1:0];
+    logic signed [OUTPUT_WIDTH-1:0] partial_sum [VECTOR_WIDTH-1:0];
 
     genvar vind;
 
