@@ -4,19 +4,19 @@ module fma #(
     parameter VECTOR_WIDTH = 4,
     parameter OUTPUT_WIDTH = 16
 ) (
-    input logic clk, rstn, mode;
+    input logic clk, rstn, mode,
 
     // input from previous layer
-    input logic signed [DATA_WIDTH-1:0] val_in [VECTOR_WIDTH-1:0];
+    input logic signed [DATA_WIDTH-1:0] val_in [VECTOR_WIDTH-1:0],
 
     // weight from current layer
-    input logic signed [WEIGHT_WIDTH-1:0] weight_in [VECTOR_WIDTH-1:0];
+    input logic signed [WEIGHT_WIDTH-1:0] weight_in [VECTOR_WIDTH-1:0],
 
     // bias from current layer
-    input logic  signed [OUTPUT_WIDTH-1:0] bias_in [VECTOR_WIDTH-1:0];
+    input logic  signed [OUTPUT_WIDTH-1:0] bias_in [VECTOR_WIDTH-1:0],
 
     // output to next layer
-    output logic signed [OUTPUT_WIDTH-1:0] sum_out [VECTOR_WIDTH-1:0];
+    output logic signed [OUTPUT_WIDTH-1:0] sum_out [VECTOR_WIDTH-1:0]
 );
     // first stage of pipeline -- product
     logic signed [OUTPUT_WIDTH-1:0] prod_reg [VECTOR_WIDTH-1:0];
@@ -32,8 +32,8 @@ module fma #(
             
             // initialize pipeline regs to 0
             if (rstn == 1'b0) begin
-                partial_sum[vind] <= OUTPUT_WIDTH'b0;
-                prod_reg[vind] <= OUTPUT_WIDTH'b0;
+                partial_sum[vind] <= {OUTPUT_WIDTH{1'b0}};
+                prod_reg[vind] <= {OUTPUT_WIDTH{1'b0}};
             end
             else begin
                 case (mode)
@@ -50,5 +50,6 @@ module fma #(
             end
         end
     end
+    assign sum_out = prod_reg;
 
 endmodule
